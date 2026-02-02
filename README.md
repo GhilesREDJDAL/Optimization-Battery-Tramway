@@ -1,41 +1,36 @@
-# Multi-Objective Optimization: Tramway Energy Storage System
+# Optimisation Multicriteres du Stockage d Energie : Tramway et Reseau de Distribution
 
-Ce projet porte sur la conception optimale d'un systeme de stockage d'energie par batterie embarque pour un tramway. L'objectif principal est de maximiser la recuperation d'energie lors du freinage afin de stabiliser la tension du reseau electrique et de reduire les pics de consommation.
+Ce projet porte sur la modelisation et l optimisation d un systeme de stockage embarque pour un tramway circulant sur une ligne alimentee par une sous-station. L objectif est de gerer les flux d energie pour minimiser l impact sur le reseau electrique.
 
-## Problematique d'Optimisation
+## Modelisation du Systeme Electrique
 
-Le dimensionnement repose sur la recherche d'un compromis entre deux objectifs contradictoires :
-1. Minimisation de la capacite de la batterie : Reduction des couts de production, du poids embarque et de l'encombrement.
-2. Minimisation de la chute de tension maximale : Amelioration de la robustesse de l'alimentation electrique pour eviter d'atteindre les limites critiques du systeme.
+Le modele developpe simule l interaction entre plusieurs composants cles :
+- Le reseau de distribution : Modelisation de la Ligne Aerienne de Contact (LAC) et du retour par les rails.
+- La sous-station : Source de tension avec une resistance interne specifique.
+- La charge mobile : Le tramway, dont la position et la puissance varient selon un profil de marche reel.
+- Le stockage embarque : Une batterie controlee pour recuperer l energie de freinage et limiter les pointes de courant.
 
-## Architecture du Projet
+## Problematique de l Optimisation
 
-Le projet est divise en trois etapes cles :
+Le projet resout le compromis entre deux objectifs antagonistes identifies dans l etude :
+1. Minimisation de la capacite de la batterie : Reduction de la masse embarquee et du cout systeme.
+2. Minimisation de la chute de tension maximale : Maintien de la tension aux bornes du tramway au-dessus des limites critiques lors des phases de traction forte.
 
-### 1. Modelisation du Systeme
-Implementation des lois physiques regissant le reseau ferroviaire (Lois de Kirchhoff et d'Ohm). Le modele calcule en temps reel les resistances de ligne (LAC et rails) en fonction de la position du tramway pour simuler les chutes de tension et les flux de puissance.
+## Methodologie et Algorithmes
 
-### 2. Exploration par Methode de Monte-Carlo
-Echantillonnage aleatoire de l'espace des decisions (Capacite vs Seuil de puissance). Cette approche permet d'identifier la topologie de l'espace des objectifs et de construire un premier front de Pareto pour comparer les solutions initiales.
+### Modelisation et Simulation Temporelle
+Calcul iteratif de la tension au pantographe en fonction de la distance a la sous-station et de l etat de charge de la batterie. Le modele integre egalement la dissipation d energie dans le rheostat de freinage lorsque le stockage est sature.
 
-### 3. Optimisation par Algorithme Genetique (NSGA-II)
-Mise en oeuvre des concepts fondamentaux de l'algorithme NSGA-II (Nondominated Sorting Genetic Algorithm II). L'utilisation d'operateurs de selection, de croisement et de mutation permet une convergence efficace vers un front de Pareto optimal, offrant un meilleur panel de solutions techniques.
+### Exploration par Methode de Monte-Carlo
+Realisation d un echantillonnage aleatoire sur les variables de decision (Capacite et Seuil de puissance) pour identifier la topologie de l espace des solutions.
 
-## Competences Techniques Demontrees
-- Optimisation Multicritere : Maitrise de la dominance de Pareto et des solutions non dominees.
-- Intelligence Calculatoire : Developpement et ajustement d'algorithmes evolutionnaires.
-- Simulation Energetique : Modelisation de flux de puissance et de systemes de stockage.
-- Langages et Outils : Python, NumPy, Matplotlib, Jupyter Notebook.
+### Optimisation par Algorithme NSGA-II
+Implementation de l algorithme genetique NSGA-II pour converger vers le Front de Pareto. Cette etape permet d identifier les configurations optimales garantissant une stabilite du reseau avec un stockage minimal.
 
-## Resultats Visuels
-
-### Front de Pareto Final
-Le graphique ci-dessous illustre le compromis optimal entre la capacite de stockage et la qualite de la tension reseau.
-![Front de Pareto](pareto_results.png)
-
-### Profil de Puissance
-Analyse temporelle des echanges energetiques entre le train, la batterie et le reseau.
-![Profil Energetique](power_profile.png)
+## Environnement de Developpement
+- Langage : Python
+- Biblioteques : NumPy, Matplotlib
+- Outils : Jupyter Notebook
 
 ---
-Projet realise dans le cadre du Master de Sorbonne Universite (2024-2025).
+Projet realise dans le cadre de l unite MU4MEN01 - Sorbonne Universite (Session 2024-2025).
